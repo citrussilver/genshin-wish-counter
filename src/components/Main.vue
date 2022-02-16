@@ -35,29 +35,14 @@
 import BannerLabel from './BannerLabel.vue'
 import { ref, computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
+import targetImg from "../assets/Chibi_Yae.jpg"
+import defaultImg from '../assets/Chibi_Ganyu.jpg'
 
 export default {
 
     components: {
         BannerLabel
     },
-    // options api version
-    // data: function () {
-    //     return {
-    //         imgError: false
-    //     }
-    // },
-    // methods: {
-    //     onImgError() {
-    //         this.imgError = true;
-    //     }
-    // },
-    // computed: {
-    //     imageSource() {
-    //         return (this.imgError) ? `/src/assets/logo.png` : `/src/assets/Chibi_Ganyu.jpg`;
-    //     }
-    // },
-
     setup() {
         const store = useStore()
         
@@ -77,7 +62,7 @@ export default {
         }
 
         const imageSource = computed(() => {
-            return (imgError.value) ? `/src/assets/Chibi_Ganyu.jpg` : `/src/assets/Chibi_Yae.jpg`;
+            return (imgError.value) ? defaultImg : targetImg;
         })
 
         onMounted(() => {

@@ -75,7 +75,7 @@ export default {
             return new URL(`../assets/${targetImg.value}`, import.meta.url).href
         }
 
-        return { timestamp, imgError, onImgError, imageSource, targetImg, getImageUrl }
+        return { timestamp, imgError, onImgError, imageSource, getImageUrl }
     }
 }
 </script>

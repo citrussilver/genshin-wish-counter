@@ -11,7 +11,7 @@
                     </div>
                     <div class="counter-container-img">
                         <figure class="image is-128x128">
-                            <img class="is-rounded" :src="imageSource" @error="onImgError()" alt="chibi_ganyu">
+                            <img class="is-rounded" :src="getImageUrl()" alt="chibi_character">
                         </figure>
                     </div>
                 </div>
@@ -41,29 +41,14 @@ export default {
     components: {
         BannerLabel
     },
-    // options api version
-    // data: function () {
-    //     return {
-    //         imgError: false
-    //     }
-    // },
-    // methods: {
-    //     onImgError() {
-    //         this.imgError = true;
-    //     }
-    // },
-    // computed: {
-    //     imageSource() {
-    //         return (this.imgError) ? `/src/assets/logo.png` : `/src/assets/Chibi_Ganyu.jpg`;
-    //     }
-    // },
-
     setup() {
         const store = useStore()
         
         let imgError = ref(false)
-
         let timestamp = ref('')
+        let targetImg = ref('Chibi_Yae.jpg')
+        let fallbackImg = ref('Chibi_Ganyu.jpg')
+
 
         const getDateTime = () => {
             const dateString = new Date().toDateString()
@@ -72,19 +57,25 @@ export default {
             timestamp.value = dateTimeString
         }
 
-        const onImgError = () => {
-            imgError.value = true
-        }
-
-        const imageSource = computed(() => {
-            return (imgError.value) ? `/src/assets/Chibi_Ganyu.jpg` : `/src/assets/Chibi_Yae.jpg`;
-        })
-
         onMounted(() => {
             setInterval(getDateTime, 1000)
         })
 
-        return { timestamp, imgError, onImgError, imageSource }
+        const onImgError = () => {
+            imgError.value = true
+        }
+
+        console.log(typeof targetImg)
+
+        const imageSource = computed(() => {
+            return (imgError.value) ? defaultImg : targetImg;
+        })
+        
+        const getImageUrl = () => {
+            return new URL(`../assets/${targetImg.value}`, import.meta.url).href
+        }
+
+        return { timestamp, imgError, onImgError, imageSource, getImageUrl }
     }
 }
 </script>

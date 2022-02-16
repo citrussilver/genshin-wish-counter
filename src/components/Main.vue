@@ -11,7 +11,7 @@
                     </div>
                     <div class="counter-container-img">
                         <figure class="image is-128x128">
-                            <img class="is-rounded" :src="targetImg" @error="onImgError()" alt="chibi_ganyu">
+                            <img class="is-rounded" :src="getImageUrl()" alt="chibi_character">
                         </figure>
                     </div>
                 </div>
@@ -35,8 +35,6 @@
 import BannerLabel from './BannerLabel.vue'
 import { ref, computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
-import targetImg from  "../assets/Chibi_Yae.jpg"
-import defaultImg from '../assets/Chibi_Ganyu.jpg'
 
 export default {
 
@@ -47,8 +45,10 @@ export default {
         const store = useStore()
         
         let imgError = ref(false)
-
         let timestamp = ref('')
+        let targetImg = ref('Chibi_Yae.jpg')
+        let fallbackImg = ref('Chibi_Ganyu.jpg')
+
 
         const getDateTime = () => {
             const dateString = new Date().toDateString()
@@ -56,6 +56,10 @@ export default {
             const dateTimeString = dateString + " " + timeString
             timestamp.value = dateTimeString
         }
+
+        onMounted(() => {
+            setInterval(getDateTime, 1000)
+        })
 
         const onImgError = () => {
             imgError.value = true
@@ -66,12 +70,12 @@ export default {
         const imageSource = computed(() => {
             return (imgError.value) ? defaultImg : targetImg;
         })
+        
+        const getImageUrl = () => {
+            return new URL(`../assets/${targetImg.value}`, import.meta.url).href
+        }
 
-        onMounted(() => {
-            setInterval(getDateTime, 1000)
-        })
-
-        return { timestamp, imgError, onImgError, imageSource, targetImg }
+        return { timestamp, imgError, onImgError, imageSource, targetImg, getImageUrl }
     }
 }
 </script>

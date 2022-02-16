@@ -11,7 +11,7 @@
                     </div>
                     <div class="counter-container-img">
                         <figure class="image is-128x128">
-                            <img class="is-rounded" :src="imageSource" @error="onImgError()" alt="chibi_ganyu">
+                            <img class="is-rounded" :src="targetImg" @error="onImgError()" alt="chibi_ganyu">
                         </figure>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
 import BannerLabel from './BannerLabel.vue'
 import { ref, computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
-import targetImg from "../assets/Chibi_Yae.jpg"
+import targetImg from  "../assets/Chibi_Yae.jpg"
 import defaultImg from '../assets/Chibi_Ganyu.jpg'
 
 export default {
@@ -61,6 +61,8 @@ export default {
             imgError.value = true
         }
 
+        console.log(typeof targetImg)
+
         const imageSource = computed(() => {
             return (imgError.value) ? defaultImg : targetImg;
         })
@@ -69,7 +71,7 @@ export default {
             setInterval(getDateTime, 1000)
         })
 
-        return { timestamp, imgError, onImgError, imageSource }
+        return { timestamp, imgError, onImgError, imageSource, targetImg }
     }
 }
 </script>

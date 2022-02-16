@@ -11,7 +11,7 @@
                     </div>
                     <div class="counter-container-img">
                         <figure class="image is-128x128">
-                            <img class="is-rounded" :src="imageSource" @error="onImgError()" alt="chibi_ganyu">
+                            <img class="is-rounded" :src="targetImg" @error="onImgError()" alt="chibi_ganyu">
                         </figure>
                     </div>
                 </div>
@@ -35,29 +35,14 @@
 import BannerLabel from './BannerLabel.vue'
 import { ref, computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
+import targetImg from  "../assets/Chibi_Yae.jpg"
+import defaultImg from '../assets/Chibi_Ganyu.jpg'
 
 export default {
 
     components: {
         BannerLabel
     },
-    // options api version
-    // data: function () {
-    //     return {
-    //         imgError: false
-    //     }
-    // },
-    // methods: {
-    //     onImgError() {
-    //         this.imgError = true;
-    //     }
-    // },
-    // computed: {
-    //     imageSource() {
-    //         return (this.imgError) ? `/src/assets/logo.png` : `/src/assets/Chibi_Ganyu.jpg`;
-    //     }
-    // },
-
     setup() {
         const store = useStore()
         
@@ -76,15 +61,17 @@ export default {
             imgError.value = true
         }
 
+        console.log(typeof targetImg)
+
         const imageSource = computed(() => {
-            return (imgError.value) ? `/src/assets/Chibi_Ganyu.jpg` : `/src/assets/Chibi_Yae.jpg`;
+            return (imgError.value) ? defaultImg : targetImg;
         })
 
         onMounted(() => {
             setInterval(getDateTime, 1000)
         })
 
-        return { timestamp, imgError, onImgError, imageSource }
+        return { timestamp, imgError, onImgError, imageSource, targetImg }
     }
 }
 </script>

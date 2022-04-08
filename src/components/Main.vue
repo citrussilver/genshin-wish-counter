@@ -68,11 +68,11 @@ export default {
         console.log(typeof targetImg)
 
         const imageSource = computed(() => {
-            return (imgError.value) ? defaultImg : targetImg;
+            return (imgError.value) ? defaultImg : fallbackImg;
         })
         
         const getImageUrl = () => {
-            return new URL(`../assets/${targetImg.value}`, import.meta.url).href
+            return new URL(`../assets/${fallbackImg.value}`, import.meta.url).href
         }
 
         return { timestamp, imgError, onImgError, imageSource, getImageUrl }

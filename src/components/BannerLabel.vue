@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
       <div class="field-group">
-        <input type="text" :placeholder="currentWish" size="30">
+        <input type="text" :placeholder="defaultWishTitle" size="30">
         <div class="line"></div>
       </div>
     </div>
@@ -13,6 +13,7 @@ export default {
     data() {
         return {
             currentWish: 'Everbloom Violet',
+            defaultWishTitle: 'Adrift in the Harbor'
         }
     },
 }
